@@ -5,9 +5,9 @@ env:
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, arch ]
     # Publish semver tags as releases.
-    tags: [ '[0-9]+[0-9.]+' ]
+    tags: [ '[0-9].*.*' ]
 
 jobs:
   trigger:
@@ -15,7 +15,7 @@ jobs:
       matrix:
         include:
           - platform: linux/amd64
-            arch: 
+            arch: ""
           - platform: linux/arm64
             arch: linux-arm64v8
 
