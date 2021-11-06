@@ -18,7 +18,7 @@ jobs:
             arch: 
           - platform: linux/arm64
             arch: linux-arm64v8
-  build:
+
     runs-on: ubuntu-latest
     permissions:
       contents: read
