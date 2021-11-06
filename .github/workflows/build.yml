@@ -17,7 +17,7 @@ jobs:
           - platform: linux/amd64
             arch: ""
           - platform: linux/arm64
-            arch: linux-arm64v8
+            arch: arm64v8
 
     runs-on: ubuntu-latest
     permissions:
