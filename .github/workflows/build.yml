@@ -60,7 +60,7 @@ jobs:
         with:
           push: ${{ github.event_name != 'pull_request' }}
           platforms: ${{ matrix.platform }}
-          build-args:
-            ARCH: ${{ matrix.arch }}
+          build-args: |
+            ARCH=${{ matrix.arch }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
