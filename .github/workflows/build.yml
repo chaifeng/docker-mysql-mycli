@@ -10,32 +10,22 @@ on:
     tags: [ '[0-9].*.*' ]
 
 jobs:
-  trigger:
-    strategy:
-      matrix:
-        include:
-          - platform: linux/amd64
-            arch: ""
-          - platform: linux/arm64
-            arch: arm64v8
-
+  docker:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-
     steps:
       - uses: actions/checkout@v2
 
       # https://github.com/marketplace/actions/docker-setup-qemu
       - uses: docker/setup-qemu-action@v1.2.0
+        with:
+          platform: all
 
       # https://github.com/marketplace/actions/docker-setup-buildx
       - uses: docker/setup-buildx-action@v1.6.0
 
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
-      - name: Log into registry ${{ env.REGISTRY }}
+      - name: Log into DockerHub
         if: github.event_name != 'pull_request'
         uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
         with:
@@ -59,8 +49,6 @@ jobs:
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           push: ${{ github.event_name != 'pull_request' }}
-          platforms: ${{ matrix.platform }}
-          build-args: |
-            ARCH=${{ matrix.arch }}
+          platforms: linux/amd64,linux/arm64,linux/ppc64le
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
