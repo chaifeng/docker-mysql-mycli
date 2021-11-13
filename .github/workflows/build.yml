@@ -40,7 +40,6 @@ jobs:
         with:
           images: ${{ env.IMAGE_NAME }}
           tags: |
-            type=match,pattern=master,value=latest
             type=ref,event=tag
             type=ref,event=branch
             type=semver,pattern={{version}}
@@ -57,5 +56,5 @@ jobs:
         with:
           push: ${{ github.event_name != 'pull_request' }}
           platforms: linux/amd64,linux/arm64
-          tags: ${{env.IMAGE_NAME}}:latest,${{env.IMAGE_NAME}}:1.20.0 # ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
