@@ -43,6 +43,12 @@ jobs:
             type=match,pattern=master,value=latest
             type=ref,event=tag
             type=ref,event=branch
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+          flavor: |
+            latest=auto
+            prefix=
+            suffix=
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
@@ -51,5 +57,5 @@ jobs:
         with:
           push: ${{ github.event_name != 'pull_request' }}
           platforms: linux/amd64,linux/arm64
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{env.IMAGE_NAME}}:latest,${{env.IMAGE_NAME}}:1.20.0 # ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
